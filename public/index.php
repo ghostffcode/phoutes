@@ -1,6 +1,6 @@
 <?php
 
-require_once 'App/handler.php';
+require_once '../App/handler.php';
 
 use bliss\Route\Route as Route;
 
