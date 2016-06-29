@@ -21,7 +21,6 @@ class Route extends App {
   public function get($route, $cb) {
     //check if the route matches the one from the user
     $route = explode('/',trim($route, '/'));
-
     $validRoute = $this->validRoutes($route, 'get');
     if ($validRoute['0']) {
       $Args = array();
@@ -87,10 +86,15 @@ class Route extends App {
   private function validRoutes($route, $reqType) {
     $res = array(false, '');
     $argval = array();
+    // Filter arrays to remove empty values
+    $route = array_filter($route);
+    $this->route = array_filter($this->route);
     // Validates and checks if it is the right route
-    if (($route === $this->route) && ($this->req == $reqType)) {
+    if ((empty($route) && empty($this->route)) && ($this->req == $reqType)) {
       $res['0'] = true;
-    } else if ((count($route) === count($this->route)) && ($this->req == $reqType)) {
+    } else if (($route === $this->route) && ($this->req == $reqType)) {
+      $res['0'] = true;
+    } else if ((count($route) === count($this->route)) && (!empty($route['0']) && !empty($this->route['0'])) && ($this->req == $reqType)) {
       // check if the only array that stands out is the one that has the url variable
       $diff = array_diff($route, $this->route);
       foreach ($diff as $key => $param) {
