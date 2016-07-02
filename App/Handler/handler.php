@@ -1,10 +1,6 @@
 <?php
 
-namespace bliss\Route;
-
-require_once 'App.php';
-
-use bliss\App as App;
+require_once '../App/Common/App.php';
 
 
 class Route extends App {
