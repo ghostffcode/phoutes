@@ -4,8 +4,7 @@ require_once '../App/Common/App.php';
 
 
 class Route extends App {
-  private $route = '',
-          $req = '';
+  private $route = '', $req = '';
 
   function __construct($route, $request) {
     // gets the route that the user has called and explode into Array
@@ -26,9 +25,19 @@ class Route extends App {
           }
         }
       $callback = &$cb;
+      $this->cbArgNames($cb);    // get the function argument names
       call_user_func_array($callback, $Args);
     }
   }
+
+  private function cbArgNames($funcName) {
+    $f = new ReflectionFunction($funcName);
+    $result = array();
+    foreach ($f->getParameters() as $param) {
+        $result[] = $param->name;
+    }
+    return $result;
+}
 
   public function post($route, $callback) {
     //check if the route matches the one from the user
@@ -105,6 +114,10 @@ class Route extends App {
       $res['0'] = false;
     }
     return $res;
+  }
+
+  public function justsay() {
+    echo 'I just spoke';
   }
 
 }
