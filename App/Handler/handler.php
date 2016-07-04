@@ -4,6 +4,9 @@ require_once '../App/Common/App.php';
 require_once '../App/Common/view.php';
 
 
+require_once '../App/init.php';
+
+
 class Route extends App {
   private $route = '', $req = '';
 
