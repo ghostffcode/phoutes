@@ -1,6 +1,7 @@
 <?php
 
 require_once '../App/Common/App.php';
+require_once '../App/Common/view.php';
 
 
 class Route extends App {
@@ -26,7 +27,9 @@ class Route extends App {
         }
       $callback = &$cb;
       $this->cbArgNames($cb);    // get the function argument names
+      //call_user_func_array($callback, $Args);
       call_user_func_array($callback, $Args);
+      die();
     }
   }
 
@@ -37,54 +40,6 @@ class Route extends App {
         $result[] = $param->name;
     }
     return $result;
-}
-
-  public function post($route, $callback) {
-    //check if the route matches the one from the user
-    $route = explode('/',trim($route, '/'));
-    $validRoute = $this->validRoutes($route, 'post');
-    if ($validRoute['0']) {
-      $Args = array();
-        if ($validRoute['1'] !== '') {
-          foreach($validRoute['1'] as $k => &$arg){
-              $Args[$k] = &$arg;
-          }
-        }
-      $callback = &$cb;
-      call_user_func_array($callback, $Args);
-    }
-  }
-
-  public function put($route, $callback) {
-    //check if the route matches the one from the user
-    $route = explode('/',trim($route, '/'));
-    $validRoute = $this->validRoutes($route, 'update');
-    if ($validRoute['0']) {
-      $Args = array();
-        if ($validRoute['1'] !== '') {
-          foreach($validRoute['1'] as $k => &$arg){
-              $Args[$k] = &$arg;
-          }
-        }
-      $callback = &$cb;
-      call_user_func_array($callback, $Args);
-    }
-  }
-
-  public function delete($route, $callback) {
-    //check if the route matches the one from the user
-    $route = explode('/',trim($route, '/'));
-    $validRoute = $this->validRoutes($route, 'delete');
-    if ($validRoute['0']) {
-      $Args = array();
-        if ($validRoute['1'] !== '') {
-          foreach($validRoute['1'] as $k => &$arg){
-              $Args[$k] = &$arg;
-          }
-        }
-      $callback = &$cb;
-      call_user_func_array($callback, $Args);
-    }
   }
 
   // check if the route is valid
@@ -114,10 +69,6 @@ class Route extends App {
       $res['0'] = false;
     }
     return $res;
-  }
-
-  public function justsay() {
-    echo 'I just spoke';
   }
 
 }
