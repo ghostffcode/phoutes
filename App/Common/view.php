@@ -5,8 +5,8 @@
  */
 class view extends App {
 
-  public function render() {
-    echo "I am here view <br />";
+  public function render($x = 'index', $data = []) {
+    include '../App/Views/'. $x .'.php';
   }
 }
 
