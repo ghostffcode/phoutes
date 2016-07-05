@@ -2,6 +2,6 @@
 
 require_once 'autoloader.php';
 
-$profile = new ctrlProfile();
+//$profile = new ctrlProfile();
 
  ?>
