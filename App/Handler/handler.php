@@ -8,7 +8,7 @@ require_once '../App/init.php';
 
 
 class Route extends App {
-  private $route = '', $req = '';
+  private $route = '', $req = '', $final = false;
 
   function __construct($route, $request) {
     // gets the route that the user has called and explode into Array
@@ -32,6 +32,7 @@ class Route extends App {
       $this->cbArgNames($cb);    // get the function argument names
       //call_user_func_array($callback, $Args);
       call_user_func_array($callback, $Args);
+      $this->final = true;
       die();
     }
   }
@@ -56,8 +57,9 @@ class Route extends App {
     if ((empty($route) && empty($this->route)) && ($this->req == $reqType)) {
       $res['0'] = true;
     } else if (($route === $this->route) && ($this->req == $reqType)) {
+      //var_dump(array_diff($route, $this->route));
       $res['0'] = true;
-    } else if ((count($route) === count($this->route)) && (!empty($route['0']) && !empty($this->route['0'])) && ($this->req == $reqType)) {
+    } else if ((count($route) === count($this->route)) && (!empty($route['0']) && ($this->diffArray($route, $this->route)) && !empty($this->route['0'])) && ($this->req == $reqType)) {
       // check if the only array that stands out is the one that has the url variable
       $diff = array_diff($route, $this->route);
       foreach ($diff as $key => $param) {
@@ -72,6 +74,34 @@ class Route extends App {
       $res['0'] = false;
     }
     return $res;
+  }
+
+  public function diffArray($r, $nr) {
+    // Check the array difference values
+    $diff = array_diff($r, $nr);
+    $diff = array_values($diff);
+    $sub = substr($diff[0], 0, 1);
+
+    if ($sub == ':') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function Error404($cb = '') {
+    if (is_callable($cb)) {
+      $cb();
+    } else if (is_string($cb)) {
+      echo $cb;
+    }
+  }
+
+  function __destruct() {
+    // check if a route worked
+    if (!$this->final) {
+      $this->Error404();
+    }
   }
 
 }
