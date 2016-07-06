@@ -6,8 +6,8 @@
  */
 class Profile {
 
-  public function name() {
-    echo "I am name from profile controller";
+  public function name($user) {
+    echo "Your username is: " . $user;
   }
 }
 
