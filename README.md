@@ -86,10 +86,12 @@ The static view method, takes two arguments:
 * The first is the view file name Eg. index or user/profile (Default is index).
 * The second (optional) is the data to be passed into the view file.
 
-Example of rendering a view file
+Example of rendering a view file:
+```php
 $route->all('/', function () {
   view::render('profile');  // renders profile.php file
 });
+```
 
 ## Rules  (A few fixes I need to do in coming versions)
 
