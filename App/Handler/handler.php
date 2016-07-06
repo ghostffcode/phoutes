@@ -18,9 +18,30 @@ class Route extends App {
   }
 
   public function get($route, $cb) {
+    $this->handler($route, $cb, 'get');
+  }
+
+  public function post($route, $cb) {
+    $this->handler($route, $cb, 'post');
+  }
+
+  public function update($route, $cb) {
+    $this->handler($route, $cb, 'update');
+  }
+
+  public function delete($route, $cb) {
+    $this->handler($route, $cb, 'delete');
+  }
+
+  public function all($route, $cb) {
+    $this->handler($route, $cb, 'all');
+  }
+
+
+  private function handler ($route, $cb, $method) {
     //check if the route matches the one from the user
     $route = explode('/',trim($route, '/'));
-    $validRoute = $this->validRoutes($route, 'get');
+    $validRoute = $this->validRoutes($route, $method);
     if ($validRoute['0']) {
       $Args = array();
         if ($validRoute['1'] !== '') {
@@ -29,7 +50,6 @@ class Route extends App {
           }
         }
       $callback = &$cb;
-      $this->cbArgNames($cb);    // get the function argument names
       //call_user_func_array($callback, $Args);
       call_user_func_array($callback, $Args);
       $this->final = true;
@@ -37,6 +57,7 @@ class Route extends App {
     }
   }
 
+  // Not implemented yet
   private function cbArgNames($funcName) {
     $f = new ReflectionFunction($funcName);
     $result = array();
@@ -54,12 +75,11 @@ class Route extends App {
     $route = array_filter($route);
     $this->route = array_filter($this->route);
     // Validates and checks if it is the right route
-    if ((empty($route) && empty($this->route)) && ($this->req == $reqType)) {
+    if ((empty($route) && empty($this->route)) && ($this->req == $reqType || $reqType == 'all')) {
       $res['0'] = true;
-    } else if (($route === $this->route) && ($this->req == $reqType)) {
-      //var_dump(array_diff($route, $this->route));
+    } else if (($route === $this->route) && ($this->req == $reqType || $reqType == 'all')) {
       $res['0'] = true;
-    } else if ((count($route) === count($this->route)) && (!empty($route['0']) && ($this->diffArray($route, $this->route)) && !empty($this->route['0'])) && ($this->req == $reqType)) {
+    } else if ((count($route) === count($this->route)) && (!empty($route['0']) && ($this->diffArray($route, $this->route)) && !empty($this->route['0'])) && ($this->req == $reqType || $reqType == 'all')) {
       // check if the only array that stands out is the one that has the url variable
       $diff = array_diff($route, $this->route);
       foreach ($diff as $key => $param) {
