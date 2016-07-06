@@ -1,7 +1,5 @@
 # phoutes - Simple PHP routes Handler
 
-#Phroutes - Simple PHP Routes
-
 ##How to run:
 
 clone the script:
