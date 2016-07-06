@@ -1,6 +1,6 @@
 # phoutes - Simple PHP routes Handler
 
-![Phoutes - Simple PHP Routes Handler](http://i.imgur.com/4DZEpFU.jpg)
+![Phoutes - Simple PHP Routes Handler](http://i.imgur.com/VFyGWi0.png)
 
 ##How to run:
 
