@@ -1,0 +1,19 @@
+@import url(https://fonts.googleapis.com/css?family=Poiret+One);
+
+body {
+  background-color: #efefef;
+}
+.phoutes {
+  height: 98vh;
+  width: 100%;
+}
+
+.phoute-text {
+  font-size: 3em;
+  font-family: 'Poiret One', cursive;
+  text-align: center;
+  position: absolute;
+  width: 98%;
+   top: 45%;
+   line-height: 0;
+}
