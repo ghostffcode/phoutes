@@ -14,7 +14,7 @@ And navigate to the public directory in the phoutes folder with your browser, mi
 ```bash
 http://localhost/phoutes/public
 ```
-* You might want to create a virtual host in your dev environment.
+* You might want to create a virtual host in your dev environment for the css and javascript files to be loaded.
 
 ## Adding Route Handler
 open phoutes/App/routes.php in your favorite code editor and create a new route using:
