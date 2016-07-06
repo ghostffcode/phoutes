@@ -1,18 +1,17 @@
 <?php
 
-$route->get('/user/:user/', function($user) {
- echo "I got your username: ". $user;
- //view::render();
-});
-
 $route->get('/home', function() {
  echo "I got Home <br />";
 });
 
-$route->get('/', function () {
-  echo 'This is homepage <br />';
-  $profile = new ctrlProfile();
-  $profile->name();
+$route->get('/:user/', function($user) {
+  // sample use of a controller
+ $profile = new ctrlProfile();
+ $profile->name($user);
+});
+
+$route->all('/', function () {
+  view::render();
 });
 
 $route->get('/user/:id', function($user, $id) {
