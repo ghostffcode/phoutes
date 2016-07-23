@@ -38,34 +38,40 @@ class Route extends App {
   }
 
 
-  private function handler ($route, $cb, $method) {
-    //check if the route matches the one from the user
+  private function handler($route, $cb, $req) {
     $route = explode('/',trim($route, '/'));
-    $validRoute = $this->validRoutes($route, $method);
-    if ($validRoute['0']) {
+    $valid = $this->validRoutes($route, $req);
+    if ($valid[0] === true) {
       $Args = array();
-        if ($validRoute['1'] !== '') {
-          foreach($validRoute['1'] as $k => &$arg){
+        if ($valid['1'] !== '') {
+          $cbArg = $this->cbArgNames($cb, $valid[1]);
+          foreach($cbArg as $k => &$arg){
               $Args[$k] = &$arg;
           }
         }
       $callback = &$cb;
-      //call_user_func_array($callback, $Args);
       call_user_func_array($callback, $Args);
       $this->final = true;
       die();
     }
   }
 
-  // Not implemented yet
-  private function cbArgNames($funcName) {
+
+  private function cbArgNames($funcName, $routeParams) {
+    $res = array();
     $f = new ReflectionFunction($funcName);
-    $result = array();
+    $fArg = array();
     foreach ($f->getParameters() as $param) {
-        $result[] = $param->name;
+        $fArg[] = $param->name;
     }
-    return $result;
+    foreach ($routeParams as $key => $value) {
+      $r = array_search($key, $fArg);
+      $res[$r] = $value;
+    }
+    ksort($res);
+    return $res;
   }
+
 
   // check if the route is valid
   private function validRoutes($route, $reqType) {
