@@ -99,15 +99,6 @@ $route->all('/', function () {
 * v1.1
   - The arguments of a callback function of a route with route Parameters can be in any order.
 
-## Rules  (A few fixes I need to add in coming versions)
-
-* If a static route and a url variable route are of the same length, the static route call comes first in your routes.php file.
-* The arguments of a callback function of a url variable route must be in the same order as the url variables (fixed in v1.1).
-
-
-## Disclaimer
-I started this as a fun project but I might take it really serious in the coming weeks. That said, I don't think you should use it for production yet.
-
 ## Want to Help?
 Thank you for trying to out, if there is something you will like to add, do make a pull request.
 
